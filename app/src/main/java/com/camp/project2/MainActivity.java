@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     //page adapter는 abstract class
     private ViewpagerAdapter viewpagerAdapter;
     public MyViewPager viewPager;
-    public TextView clocktext;
-    public static Handler mHandler;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {//oncreate는 어떠한 이벤트 메세지가 수신되었을 떄 실행되는 메서. 끝나고 view를 보여주는데 while을 넣어버리면 끝나지않음..
         super.onCreate(savedInstanceState);
@@ -50,45 +50,12 @@ public class MainActivity extends AppCompatActivity {
         Character_screen c_screen = new Character_screen();
         Room_screen r_screen = new Room_screen();
 
-        viewpagerAdapter.additem(c_screen);
-        viewpagerAdapter.additem(r_screen);
-
+        viewpagerAdapter.addItem(c_screen);
+        viewpagerAdapter.addItem(r_screen);
         viewPager.setAdapter(viewpagerAdapter);
 
-        clocktext = findViewById(R.id.testview);
-
-        mHandler = new Handler(){ //이벤트가 발생했을 때 호출되는 함
-            @Override
-            public void handleMessage(Message msg){
-                Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-                String strtime = sdf.format(cal.getTime());
-                clocktext.setText(strtime);
-            }
-        };
-
-        class NewRunnable implements Runnable {
-            @Override
-            public void run(){
-                while(true){
-                    try {
-                        Thread.sleep(1000);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                    mHandler.sendEmptyMessage(0);
-                }
-            }
-        }
-
-        NewRunnable nr = new NewRunnable();
-        Thread test = new Thread(nr);
-        test.start();
-
-
     }
+
 
     @Override
     public void onBackPressed(){//액티비티에서 동작.
